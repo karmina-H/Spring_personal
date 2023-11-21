@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.example.sbb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class SbbApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(SbbApplication.class, args);
     }
-//마지막 테스트 입니다
+
 }
