@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.sbb.answer.AnswerForm;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -16,17 +18,17 @@ import java.util.List;
 @RequestMapping("/question")
 public class QuestionController {
 
-    private final QuestionServie questionServie;
+    private final QuestionServie questionService;
 
     @GetMapping("/list")
-    public String list(Model model){
-        List<Question> questionList = this.questionServie.getlist();
-        model.addAttribute("questionList", questionList);
+    public String list(Model model,@RequestParam(value="page", defaultValue="0") int page){
+        Page<Question> paging = this.questionService.getList(page);
+        model.addAttribute("paging", paging);
         return "question_list";
     }
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm){
-        Question question = this.questionServie.getQuestion(id);
+        Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question); //addAttribute도 타임리프인가?
         return "question_detail";
     }
@@ -39,7 +41,7 @@ public class QuestionController {
         if(bindingResult.hasErrors()){
             return "question_form";
         }
-        this.questionServie.create(questionForm.getSubject(),questionForm.getContent());
+        this.questionService.create(questionForm.getSubject(),questionForm.getContent());
         return "redirect:/question/list";
     }
 
