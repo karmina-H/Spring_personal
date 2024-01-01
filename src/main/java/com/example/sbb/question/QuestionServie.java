@@ -1,9 +1,11 @@
 package com.example.sbb.question;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import com.example.sbb.DataNotFoundException;
@@ -34,7 +36,9 @@ public class QuestionServie {
         this.questionRepository.save(q);
     }
     public Page<Question> getList(int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10,Sort.by(sorts));
         return this.questionRepository.findAll(pageable);
     }
 }
