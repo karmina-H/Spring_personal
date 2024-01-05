@@ -1,12 +1,14 @@
 package com.example.sbb.question;
 
 import com.example.sbb.answer.Answer;
+import com.example.sbb.user.SiteUser;
 import jakarta.persistence.*;
 import java.util.List;
 import java.time.LocalDateTime;//이거 왜 자동으로 추가 안되나요?
 
 import lombok.Setter;
 import lombok.Getter;
+import org.springframework.cglib.core.Local;
 
 @Entity
 @Getter
@@ -27,5 +29,10 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
+
+    @ManyToOne
+    private SiteUser author;
+
+    private LocalDateTime modifyDate;
 }
 //참조 엔티티의 속성명은 무엇을 의미하는가? ->"mappedBy = "question"
